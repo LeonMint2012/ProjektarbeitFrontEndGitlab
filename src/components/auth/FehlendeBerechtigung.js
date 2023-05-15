@@ -8,7 +8,7 @@ const FehlendeBerechtigung = () => {
         <section>
             <h1>Fehlende Berechtigung für diese Seite</h1>
             <br />
-            
+            {/* Mirror Test */}
             <div>
                 <Link to="/">Home</Link>
             </div>

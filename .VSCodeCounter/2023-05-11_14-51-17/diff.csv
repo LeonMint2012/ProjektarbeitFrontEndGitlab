@@ -1,0 +1,9 @@
+"filename", "language", "JavaScript", "CSS", "comment", "blank", "total"
+"c:\Users\LeonZ\Documents\React\projektarbeit\src\App.css", "CSS", 0, 15, 0, 8, 23
+"c:\Users\LeonZ\Documents\React\projektarbeit\src\components\auth\Login.js", "JavaScript", 1, 0, 0, 0, 1
+"c:\Users\LeonZ\Documents\React\projektarbeit\src\components\firmenevents\Firmenevents.js", "JavaScript", 60, 0, 0, 5, 65
+"c:\Users\LeonZ\Documents\React\projektarbeit\src\components\firmenevents\FirmeneventsAngemeldet.js", "JavaScript", 66, 0, 0, 6, 72
+"c:\Users\LeonZ\Documents\React\projektarbeit\src\components\firmenevents\NeuesFirmenevent.js", "JavaScript", 102, 0, 0, 7, 109
+"c:\Users\LeonZ\Documents\React\projektarbeit\src\components\gegenstaende\NeuerGegenstand.js", "JavaScript", -7, 0, -34, 0, -41
+"c:\Users\LeonZ\Documents\React\projektarbeit\src\components\mitarbeiter\MitarbeiterProfil.js", "JavaScript", -2, 0, 3, 0, 1
+"Total", "-", 220, 15, -31, 26, 230

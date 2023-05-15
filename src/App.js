@@ -7,7 +7,7 @@ import NeuerMitarbeiter from './components/mitarbeiter/NeuerMitarbeiter';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import FehlendeBerechtigung from './components/auth/FehlendeBerechtigung';
-import AllesTest from './components/AllesTest';
+
 
 import Layout from './components/auth/Layout';
 

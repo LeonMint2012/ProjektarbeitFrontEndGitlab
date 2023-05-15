@@ -13,7 +13,7 @@ function Register(){
     )
 
     function handleChange(event) {
-        const { name, value, type, checked } = event.target
+        const { name, value} = event.target
         setRegisterFormData(prevFormData => {
             return {
                 ...prevFormData,

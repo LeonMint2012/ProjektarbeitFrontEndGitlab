@@ -1,7 +1,7 @@
 module.exports = {
     devServer: {
-        disableHostCheck: true
+        compress: true,
+        public: 'projektarbeitfrontendgitlab-production.up.railway.app/'
     }
-    
 }
 

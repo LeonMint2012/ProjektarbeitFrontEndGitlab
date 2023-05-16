@@ -1,7 +1,7 @@
-module.exports = {
-    devServer: {
-        compress: true,
-        public: 'projektarbeitfrontendgitlab-production.up.railway.app/'
-    }
-}
+// module.exports = {
+//     devServer: {
+//         compress: true,
+//         public: 'projektarbeitfrontendgitlab-production.up.railway.app/'
+//     }
+// }
 

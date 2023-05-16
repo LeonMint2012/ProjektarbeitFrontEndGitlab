@@ -24,3 +24,6 @@ yarn-error.log*
 
 #googledrive
 .tmp.driveupload
+
+#VSCodeCounter
+.VSCodeCounter

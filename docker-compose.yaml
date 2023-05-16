@@ -1,0 +1,9 @@
+version: "3.8"
+services:
+  projektarbeitfrontend:
+    build: ./build
+    container_name: projektarbeotfrontend_c
+    ports:
+      - '3000:3000'
+    stdin_open: true
+    tty: true

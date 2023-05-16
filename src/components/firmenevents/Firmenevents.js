@@ -63,7 +63,7 @@ const Firmenevents = () => {
               <p>Ort: {firmenevent.ort}</p>
               <p>Uhrzeit: {firmenevent.uhrzeit}</p>
               <p>Erstellt von: {firmenevent.mitarbeiterIdErsteller}</p>
-              <p>Teilnehmer: {firmenevent.mitarbeiterIdTeilnehmer}</p>
+              <p>Teilnehmer: {firmenevent.mitarbeiterIdTeilnehmer.toString()}</p>
               <button onClick={() => teilnehmen(firmenevent)}>Teilnehmen</button>
             </li>
           )

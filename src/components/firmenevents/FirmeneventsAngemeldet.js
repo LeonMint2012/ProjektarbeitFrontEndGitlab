@@ -15,9 +15,7 @@ const FirmeneventsAngemeldet = () => {
             .then(response => response.json())
             .then(data => {
                 setAngemeldeteEvents(data)
-                for(const ele in data){
-                    console.log(data.id)
-                }
+                
             })
     }, [])
 

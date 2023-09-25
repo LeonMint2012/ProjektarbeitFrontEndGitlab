@@ -15,10 +15,8 @@ const Footer = () => {
     }
   return (
     <footer>
-      <div className="mittigTest">
         <small>&copy; by Muster AG</small>
         {auth?.token && <button onClick={logout}>Ausloggen</button>}
-      </div>
     </footer>
   )
 }

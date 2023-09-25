@@ -12,6 +12,16 @@ const NeuesFirmenevent = (props) => {
             datum:"",
         }
     )
+    
+    const [toast, setToast] = useState(null);
+
+    function showToast(nachricht) {
+        setToast(nachricht);
+    
+        setTimeout(() => {
+          setToast(null);
+        }, 3000); // Schließt die Benachrichtigung nach 3 Sekunden
+      };
 
     const [gueltigeUhrzeit, setGueltigeUhrzeit] = useState(false);
 
@@ -50,6 +60,7 @@ const NeuesFirmenevent = (props) => {
         })
             .then(reponse => reponse.json())
             .then(data => {
+                console.log(data)
                 props.setFirmenevents(prevFirmenevents =>[...prevFirmenevents, data])
                 console.log("versendet")
                 firmeneventNeuFormData.titel="";
@@ -57,9 +68,14 @@ const NeuesFirmenevent = (props) => {
                 firmeneventNeuFormData.ort="";
                 firmeneventNeuFormData.datum="";
             })
+        showToast("Neues Firmenevent erstellt")
     }
     return (
         <div>
+            {toast && 
+            <div className="toast"> 
+                {toast}
+            </div>}
             <p>Neues Firmenevent erstellen:</p>
             <form>
                 <label>Titel:

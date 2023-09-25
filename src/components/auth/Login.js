@@ -15,6 +15,9 @@ function Login(){
     //const [jwtToken, setjwtToken] = useState("");
     const { setAuth } = useContext(AuthContext);
 
+    const [showModal, setShowModal] = useState(false)
+    const [nutzerRueckmeldung, setNutzerRueckmeldung] = useState(null);
+
     function anmelden(event){
         event.preventDefault()
         var data = {
@@ -28,9 +31,16 @@ function Login(){
                 'Content-Type': 'application/json'
             }),
             body: JSON.stringify(data)
-        })
-            .then(reponse => reponse.json())
+        })  
+            .then(response => {
+                if(!response.ok){
+                    openModal("Anmeldung fehlgeschlagen")
+                  
+                }
+                return response.json()
+            })
             .then(data => {
+                console.log(data)          
                 const userId = data?.userId
                 const username = data?.username
                 const token = data?.token
@@ -38,15 +48,33 @@ function Login(){
                 console.log(userId + " " + username + " " +  token + " " + rollen)
                 setAuth({userId, username, token, rollen})
                 navigate(from, {replace: true})
+               
             }
             )  
             
     }
 
+    function openModal(nachricht){
+        setNutzerRueckmeldung(nachricht)
+        setShowModal(true)
+    }
+    function closeModal(){
+        setShowModal(false)
+    }
+
+
 
     return(
         <section>
             <div className="center-form">
+            {showModal && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <p>{nutzerRueckmeldung}</p>
+                        <button onClick={closeModal}>OK</button>
+                    </div>
+                </div>
+            )}
             <form>
                 <fieldset>
                     {/* kein Feedback über anmeldung */}

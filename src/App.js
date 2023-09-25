@@ -1,11 +1,11 @@
 import './App.css';
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route} from 'react-router-dom';
 import NeuerGegenstand from './components/gegenstaende/NeuerGegenstand';
 import NeuerSchaden from './components/schadensmeldung/NeuerSchaden';
 import NeuerMitarbeiter from './components/mitarbeiter/NeuerMitarbeiter';
 import Login from './components/auth/Login';
-import Register from './components/auth/Register';
+
 import FehlendeBerechtigung from './components/auth/FehlendeBerechtigung';
 
 
@@ -31,20 +31,16 @@ function App() {
     <Routes>
         <Route path="/" element={<Layout/>}>
           {/* Routen die public sind */}
-          <Route index path="login" element={<Login/>} />
-          <Route path="register" element={<Register/>} />
+          <Route path="login" element={<Login/>} />
           <Route path="fehlendeberechtigung" element={<FehlendeBerechtigung/>} />
 
-          {/* TODO sowas wie ne link page sammlung */}
-          {/* <Route path="register" element={<Register/>} /> */}
-          {/* Routen die geschützt sind */}
-          
 
+          {/* Routen die geschützt sind */}          
           <Route element={<RequireAuth allowedRoles={ROLES.User}/> }>
             {/* <Route path="/" element={<AllesTest/>} /> */}
             <Route path="gegenstand" element={<NeuerGegenstand/>} />
             <Route path="gegenstandAusleihen" element={<GegenstandAusleihen/>} />
-            <Route index path="mitarbeiterProfil" element={<MitarbeiterProfil/>} />
+            <Route path="/" element={<MitarbeiterProfil/>} />
             <Route path="mitarbeiter" element={<NeuerMitarbeiter/>} />
             <Route path="neueSchadensmeldung" element={<NeuerSchaden/>} />
             <Route path="firmenevents" element={<Firmenevents/>} />
@@ -63,8 +59,6 @@ function App() {
             <Route path="alleSchadensmeldungen" element={<AlleSchadensmeldungen/>} />
           </Route>
 
-          
-          
           {/* Nicht vorhanden */}
           {/* <Route path="*" element={<Gegenstand/>} /> */}
           

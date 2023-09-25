@@ -19,29 +19,38 @@ const GegenstandAusleihen = () => {
             .then(data => setVerfuegbareGegenstaende(data))
     }, [aenderung])
 
+    const [toast, setToast] = useState(null);
 
+    function showToast(nachricht) {
+        setToast(nachricht);
+    
+        setTimeout(() => {
+          setToast(null);
+        }, 3000); // Schließt die Benachrichtigung nach 3 Sekunden
+      };
 
-    useEffect(() => {
-        var authString = "Bearer " + auth.token;
-        fetch("http://localhost:8080/api/principal", {
-            headers: {
-                "Authorization": authString
-            },
+    // useEffect(() => {
+    //     var authString = "Bearer " + auth.token;
+    //     fetch("http://localhost:8080/api/principal", {
+    //         headers: {
+    //             "Authorization": authString
+    //         },
 
-        })
-            .then(response => response.json())
-            .then(data => {
-
-                setMitDaten(data)
-            })
-    }, [])
+    //     })
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             console.log(data)
+    //             setMitDaten(data)
+    //         })
+    // }, [])
 
 
 
     const ausleihen = async (gegenstandZumAusleihen) => {
+        console.log("MitarbeitID: " + auth.userId)
         var data = {
             "gegenstandId": gegenstandZumAusleihen.id,
-            "mitarbeiterId": mitDaten.id
+            "mitarbeiterId": auth.userId
         }
         fetch("http://localhost:8080/api/gegenstand/ausleihen", {
             method: 'POST',
@@ -52,8 +61,17 @@ const GegenstandAusleihen = () => {
             }),
             body: JSON.stringify(data)
         })
-            .then(response => response.json())
+            .then(response => {
+                    console.log("response:" + response.stringify);
+                if(response.stringify === undefined){
+                    showToast("Gehalt ist nicht ausreichend")
+                }
+                 return response.json()
+            })
             .then(data => {
+                if(data === null){
+                    console.log("Fehler null")
+                }
                 const neueVerfuegbareGegenstaende = verfuegbareGegenstaende.filter(
                     (gegenstand) => gegenstand.id !== data.id);
                 setVerfuegbareGegenstaende(neueVerfuegbareGegenstaende);
@@ -64,7 +82,7 @@ const GegenstandAusleihen = () => {
     const zurueckgeben = async (gegenstandZumZurueckgeben) => {
         var data = {
             "gegenstandId": gegenstandZumZurueckgeben.id,
-            "mitarbeiterId": mitDaten.id
+            "mitarbeiterId": auth.userId
         }
         console.log(verfuegbareGegenstaende)
         console.log(ausgeliehendeGegenstaende)
@@ -89,6 +107,10 @@ const GegenstandAusleihen = () => {
 
     return (
         <div>
+            {toast && 
+            <div className="toast-fehler">
+                {toast}
+            </div>}
             <h3>Verfügbare Gegenstände:</h3>
             <ul>
                 {verfuegbareGegenstaende.map(gegenstand => {

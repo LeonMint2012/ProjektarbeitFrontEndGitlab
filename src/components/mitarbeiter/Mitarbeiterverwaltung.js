@@ -2,10 +2,11 @@ import React from 'react'
 import useAuth from '../../hooks/useAuth'
 import { useState } from 'react'
 import NeuerMitarbeiter from './NeuerMitarbeiter';
+import MitarbeiterBearbeiten from './MitarbeiterBearbeiten';
 const Mitarbeiterverwaltung = () => {
   const {auth} = useAuth();
 
-  const [mitarbeiter, setMitarbeiter] = useState([])
+  const [alleMitarbeiter, setAlleMitarbeiter] = useState([])
   
   const [editiereMitarbeiter, setEditiereMitarbeiter] = useState(null)
   const [wirdEditiert, setWirdEditiert] = useState(false);
@@ -18,12 +19,42 @@ const Mitarbeiterverwaltung = () => {
     })
       .then(res => res.json())
       .then(data => {
-        setMitarbeiter(data)
+        setAlleMitarbeiter(data)
       })
   }, [])
 
   const handleUpdateMitarbeiter = (mitarbeiter) =>{
+    var data ={
+      "id":mitarbeiter.id,
+      "vorname":mitarbeiter.vorname,
+      "nachname":mitarbeiter.nachname,
+      "email":mitarbeiter.email,
+      "rollen":mitarbeiter.rollen,
+      "gehalt":mitarbeiter.gehalt
+    }
+    console.log(JSON.stringify(data) + "neue Mitarbeiter infos")
+    fetch("http://localhost:8080/api/mitarbeiter/editiereMitarbeiter", {
+      method: 'POST',
+      headers: new Headers({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        "Authorization": "Bearer " + auth.token
+      }),
+      body: JSON.stringify(data)
+    })
+      .then(reponse => reponse.json())
+      .then(data => {
 
+        const neueMitarbeiterList = alleMitarbeiter.map(mitarbeiter => {
+          if (mitarbeiter.id === data.id) {
+            return { ...mitarbeiter, rollen: data.rollen, gehalt: data.gehalt}
+          }
+          return mitarbeiter;
+        })
+        setAlleMitarbeiter(neueMitarbeiterList)
+      })
+
+    schliesseEditDialog();
   }
 
   const oeffneEditDialog = (mitarbeiter) => {
@@ -37,15 +68,35 @@ const Mitarbeiterverwaltung = () => {
   }
 
   const handleDeletMitarbeiter = async (mitarbeiterZumLoeschen) => {
-
+    console.log(mitarbeiterZumLoeschen);
+    await fetch(`http://localhost:8080/api/mitarbeiter/loescheMitarbeiter/${mitarbeiterZumLoeschen.id}`, {
+      method: "DELETE",
+      headers: new Headers({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        "Authorization": "Bearer " + auth.token
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        const neueMitarbeiter = alleMitarbeiter.filter((mitarbeiter) => mitarbeiter.id !== data.id);
+        setAlleMitarbeiter(neueMitarbeiter);
+      })
   }
   
   return (
     <div>
         <h3 className="text-center">Mitarbeiterverwaltung</h3>
+        <NeuerMitarbeiter setAlleMitarbeiter={setAlleMitarbeiter}/>
+          {wirdEditiert && (<MitarbeiterBearbeiten 
+            editiereMitarbeiter={editiereMitarbeiter}
+            handleUpdateMitarbeiter={handleUpdateMitarbeiter}
+            schliesseEditDialog={schliesseEditDialog}
+            />
+          )}
         <ul>
           {
-            mitarbeiter.map(mitarbeiter => {
+            alleMitarbeiter.map(mitarbeiter => {
               return(
                 <li key={mitarbeiter.id}>
                   <p>Id: {mitarbeiter.id}</p>
@@ -59,8 +110,7 @@ const Mitarbeiterverwaltung = () => {
                 </li>
               )
             })
-          }
-          <NeuerMitarbeiter/>
+          }  
         </ul>
     </div>
   )

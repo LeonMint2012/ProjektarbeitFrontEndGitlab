@@ -1,0 +1,54 @@
+.flex-container-profile{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+}
+
+.flex-container-profile div{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    
+}
+
+h3{
+    width: 100%;
+    text-align: center;
+}
+
+.firmeneventAngemeldetContainer{
+    margin: 10px;
+    margin-top: 100px;
+    width: calc(100% - 20px);
+    
+}
+
+.button-profile{
+    margin: 0;
+    
+    margin-top: 15px;
+    width: 100%;
+    
+}
+
+.button-profile2{
+    margin: 0;
+    
+    margin-bottom: 30px;
+    width: 100%;
+    background-color: lightcoral;
+}
+.button-profile2:enabled:hover{
+    background-color: rgb(250, 81, 81);
+}
+
+.firmeneventAngemeldetContainer ul{
+    list-style-type: none;
+    padding: 0;
+    margin:10;
+    
+} 
+

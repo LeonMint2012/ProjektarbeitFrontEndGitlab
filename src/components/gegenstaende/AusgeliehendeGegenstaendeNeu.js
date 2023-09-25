@@ -5,8 +5,11 @@ const AusgeliehendeGegenstaendeNeu = ({mitDaten, ausgeliehendeGegenstaende, setA
     const {auth} = useAuth();
     useEffect(() => {
         
-        if(mitDaten){
-        fetch(`http://localhost:8080/api/gegenstand/gegenstaendeVon/${mitDaten?.id}`, {
+        if(auth.userId){
+        console.log(auth?.userId)
+        console.log(auth.token)
+        fetch(`http://localhost:8080/api/gegenstand/gegenstaendeVon/${auth?.userId}`, {
+            
             headers: {
                 "Authorization": "Bearer " + auth.token
             }
@@ -17,7 +20,8 @@ const AusgeliehendeGegenstaendeNeu = ({mitDaten, ausgeliehendeGegenstaende, setA
                             console.log("reload")
             })
     }
-    }, [mitDaten, aenderung])
+    }, [])
+    
 
   return (
     <div>

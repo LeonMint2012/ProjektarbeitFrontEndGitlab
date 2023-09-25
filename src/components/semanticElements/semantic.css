@@ -38,3 +38,25 @@ nav {
   .mittigTest{
     text-align: center;
   }
+
+  footer{
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    padding: 15px ;
+    background-color: #333333;
+  }
+
+  footer button{
+    background-color: lightcoral;
+  }
+  footer button:enabled:hover{
+    background-color: rgb(250, 81, 81);
+  }
+  body{
+    margin-bottom: 100px;
+  }

@@ -1,17 +1,31 @@
 import React from "react";
 import '../../App.css';
 import useAuth from "../../hooks/useAuth";
+import {useState, useEffect} from 'react'
+
 
 function NeuerSchaden({ onChange, onSubmit }) {
     const {auth} = useAuth();
 
+    const [toast, setToast] = useState(null);
+
+    function showToast(nachricht) {
+        setToast(nachricht);
+    
+        setTimeout(() => {
+          setToast(null);
+        }, 3000); // Schließt die Benachrichtigung nach 3 Sekunden
+      };
+
+    
     const [schadenFormData, setSchadenFormData] = React.useState({
         gebaude: "",
         etage: 0,
         titel: "",
         beschreibung: "",
-        dringlichkeit: "NIEDRIG",
+        dringlichkeit: "HOCH",
     });
+
 
     function handleInputChange(event) {
         const { name, value } = event.target;
@@ -23,6 +37,7 @@ function NeuerSchaden({ onChange, onSubmit }) {
     }
 
     function addSchaden(event) {
+        showToast("Schadenmeldung erfolgreich gesendet")
         event.preventDefault()
         var data = {
             "gebaeude": schadenFormData.gebaude,
@@ -45,64 +60,72 @@ function NeuerSchaden({ onChange, onSubmit }) {
     }
 
     return (
-        <div className="center">
-        <form onSubmit={onSubmit}>
-            <fieldset>
-                <legend>Neuen Schaden hinzufügen:</legend>
-                <label>Gebäude:
-                    <input
-                        type="text"
-                        placeholder="Gebäude"
-                        name="gebaude"
-                        value={schadenFormData.gebaude}
-                        onChange={handleInputChange}
-                    />
-                </label>
-                <br />
-                <label>Etage:
-                    <input
-                        type="number"
-                        placeholder="Etage"
-                        name="etage"
-                        value={schadenFormData.etage}
-                        onChange={handleInputChange}
-                    />
-                </label>
-                <br />
-                <label className="test">Titel:
-                    <input
-                        type="text"
-                        placeholder="Titel"
-                        name="titel"
-                        value={schadenFormData.titel}
-                        onChange={handleInputChange}
-                    />
-                </label>
-                <br />
-                <label>Beschreibung:
-                    <textarea
-                        placeholder="Beschreibung"
-                        name="beschreibung"
-                        value={schadenFormData.beschreibung}
-                        onChange={handleInputChange}
-                    ></textarea>
-                </label>
-                <br />
-                <label>Dringlichkeit:
-                    <select
-                        name="dringlichkeit"
-                        value={schadenFormData.dringlichkeit}
-                        onChange={handleInputChange}
-                    >
-                        <option value="HOCH">Hoch</option>
-                        <option value="MITTEL">Mittel</option>
-                        <option value="GERING">Gering</option>
-                    </select>
-                </label>
-                <br />
-                <button type="submit" onClick={addSchaden}>Schaden hinzufügen</button>
-            </fieldset>
-        </form>
+        <div>
+
+        {toast && (
+        <div className="toast">
+            {toast}
+        </div>
+        )}
+            <div className="center-form">
+                <form onSubmit={onSubmit}>
+                    <fieldset>
+                        <legend>Neuen Schaden hinzufügen:</legend>
+                        <label>Gebäude:
+                            <input
+                                type="text"
+                                placeholder="Gebäude"
+                                name="gebaude"
+                                value={schadenFormData.gebaude}
+                                onChange={handleInputChange}
+                            />
+                        </label>
+                        <br />
+                        <label>Etage:
+                            <input
+                                type="number"
+                                placeholder="Etage"
+                                name="etage"
+                                value={schadenFormData.etage}
+                                onChange={handleInputChange}
+                            />
+                        </label>
+                        <br />
+                        <label className="test">Titel:
+                            <input
+                                type="text"
+                                placeholder="Titel"
+                                name="titel"
+                                value={schadenFormData.titel}
+                                onChange={handleInputChange}
+                            />
+                        </label>
+                        <br />
+                        <label>Beschreibung:
+                            <textarea
+                                placeholder="Beschreibung"
+                                name="beschreibung"
+                                value={schadenFormData.beschreibung}
+                                onChange={handleInputChange}
+                            ></textarea>
+                        </label>
+                        <br />
+                        <label>Dringlichkeit:
+                            <select
+                                name="dringlichkeit"
+                                value={schadenFormData.dringlichkeit}
+                                onChange={handleInputChange}
+                            >
+                                <option value="HOCH">Hoch</option>
+                                <option value="MITTEL">Mittel</option>
+                                <option value="GERING">Gering</option>
+                            </select>
+                        </label>
+                        <br />
+                        <button type="submit" onClick={addSchaden}>Schaden hinzufügen</button>
+                    </fieldset>
+                </form>
+            </div>
         </div>
     );
 }

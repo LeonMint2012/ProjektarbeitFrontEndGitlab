@@ -103,6 +103,37 @@ const Gegenstandsverwaltung = () => {
       })
   }
 
+  const handleGegenstandFreigeben = async (gegenstand) => {
+    console.log(gegenstand);
+
+    var data = {
+      "id": gegenstand.id,
+      "mitarbeiterId": null,
+      "bezeichnung": gegenstand.bezeichnung,
+      "preis": gegenstand.preis
+    }
+    fetch("http://localhost:8080/api/gegenstand/editiereGegenstand", {
+      method: 'POST',
+      headers: new Headers({
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        "Authorization": "Bearer " + auth.token
+      }),
+      body: JSON.stringify(data)
+    })
+      .then(reponse => reponse.json())
+      .then(data => {
+
+        const neuesGegenstandsList = gegenstaende.map(gegenstand => {
+          if (gegenstand.id === data.id) {
+            return { ...gegenstand, bezeichnung: data.bezeichnung, preis: data.preis, istAusgeliehen: data.istAusgeliehen }
+          }
+          return gegenstand;
+        })
+        setGegenstaende(neuesGegenstandsList)
+      })
+  }
+
   const getVorUndNachnameMitMitabeiterId = (id) => {
     for (const element of mitarbeiterDaten) {
       if (element.id === id) {
@@ -116,23 +147,6 @@ const Gegenstandsverwaltung = () => {
   return (
     <div>
       <h2 className="text-center">Startseite der Gegenstandsverwaltung</h2>
-      <ul>
-        {gegenstaende.map(gegenstand => {
-          return (
-            <li key={gegenstand.id}>
-              <p>Gegenstand Id: {gegenstand.id}</p>
-              {/* <p>Ausgeliehen von: {gegenstand.mitarbeiter ? `${gegenstand.mitarbeiter.firstname} ${gegenstand.mitarbeiter.lastname} ${gegenstand.mitarbeiter.email}`: "Niemandem"}</p> */}
-              <p>Ausgeliehen von: {gegenstand.mitarbeiterId ? `${getVorUndNachnameMitMitabeiterId(gegenstand.mitarbeiterId)}` : "Niemandem"}</p>
-              <p>Bezeichnung: {gegenstand.bezeichnung}</p>
-              <p>Preis fürs leihen: {gegenstand.preis}</p>
-              <p>Ist ausgeliehen: {gegenstand.istAusgeliehen ? "Ja" : "Nein"}</p>
-              <button onClick={() => oeffneEditDialog(gegenstand)}>Aktualisieren</button>
-              <button onClick={() => handleDeleteGegenstand(gegenstand)}>Löschen</button>
-            </li>
-          )
-        })}
-      </ul>
-
       <NeuerGegenstand setGegenstaende={setGegenstaende} />
       {wirdEditiert && (<GegenstandBearbeiten
         editierterGegenstand={editierterGegenstand}
@@ -140,6 +154,25 @@ const Gegenstandsverwaltung = () => {
         schliesseEditDialog={schliesseEditDialog}
       />
       )}
+      <ul>
+        {gegenstaende.map(gegenstand => {
+          return (
+            <li key={gegenstand.id}>
+              <p>Gegenstand Id: {gegenstand.id}</p>
+              {/* <p>Ausgeliehen von: {gegenstand.mitarbeiter ? `${gegenstand.mitarbeiter.firstname} ${gegenstand.mitarbeiter.lastname} ${gegenstand.mitarbeiter.email}`: "Niemandem"}</p> */}
+              <p>Ausgeliehen von: {gegenstand.istAusgeliehen ? `${getVorUndNachnameMitMitabeiterId(gegenstand.mitarbeiterId)}` : "Niemandem"}</p>
+              <p>Bezeichnung: {gegenstand.bezeichnung}</p>
+              <p>Preis fürs leihen: {gegenstand.preis}</p>
+              <p>Ist ausgeliehen: {gegenstand.istAusgeliehen ? "Ja" : "Nein"}</p>
+              <button onClick={() => oeffneEditDialog(gegenstand)}>Aktualisieren</button>
+              {!gegenstand.istAusgeliehen &&<button onClick={() => handleDeleteGegenstand(gegenstand)}>Löschen</button>}
+              {gegenstand.istAusgeliehen && <button onClick={() => handleGegenstandFreigeben(gegenstand)}>Freigeben</button>}
+            </li>
+          )
+        })}
+      </ul>
+
+      
 
     </div>
   )

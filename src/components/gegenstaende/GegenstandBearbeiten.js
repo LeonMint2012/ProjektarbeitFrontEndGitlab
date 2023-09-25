@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import "../../App.css"
 const GegenstandBearbeiten = ({editierterGegenstand, handleUpdateGegenstand, schliesseEditDialog}) => {
     //(mitarbeiter), bezeichnung, preis, (istAusgeliehen(automatisch ändern, wenn mitarbeiter entfernt/hinzugefügt wird))
@@ -22,6 +22,10 @@ const GegenstandBearbeiten = ({editierterGegenstand, handleUpdateGegenstand, sch
         });
     }
 
+    function gegenstandFreigeben(){
+
+    }
+
     const handleSubmit = (event) => {
         event.preventDefault();
         handleUpdateGegenstand(neuGegenstandFormData)
@@ -33,14 +37,6 @@ const GegenstandBearbeiten = ({editierterGegenstand, handleUpdateGegenstand, sch
         >
             <form>
                 {/* Es soll nur möglich sein Mitarbeiter zu entfernen, Umsetzung: Button? */}
-                <label>Ausgeliehen von
-                    <input
-                        type="text"
-                        onChange={handleChange}
-                        value={neuGegenstandFormData.mitarbeiterId ? neuGegenstandFormData.mitarbeiterId : "Niemandem"}
-                        name="mitarbeiterId"
-                    />
-                </label>
                 <label>Bezeichnung
                         <input
                             type="text"
@@ -59,6 +55,7 @@ const GegenstandBearbeiten = ({editierterGegenstand, handleUpdateGegenstand, sch
                 </label>
                 <button onClick={handleSubmit}>Speichern</button>
                 <button onClick={schliesseEditDialog}>Abbrechen</button>
+                
             </form>
         </div>
     )

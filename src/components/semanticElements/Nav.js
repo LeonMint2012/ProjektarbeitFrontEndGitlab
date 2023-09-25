@@ -7,7 +7,7 @@ const Nav = () => {
   return (
     <nav>
       <ul>
-        <li><Link to="/mitarbeiterProfil">Profil</Link></li>
+        <li><Link to="/">Profil</Link></li>
 
         <li><Link to="/gegenstandAusleihen">Ausleihen</Link></li>
 
@@ -21,7 +21,7 @@ const Nav = () => {
 
         {auth?.rollen?.includes("HRM") && <li><Link to="/mitarbeiterverwaltung">Mitarbeiterverwaltung</Link></li>}
 
-        {auth?.rollen?.includes("HAUSMEISTER") && <li><Link to="/alleSchadensmeldungen">Alles Schadensmeldungen</Link></li>}
+        {auth?.rollen?.includes("HAUSMEISTER") && <li><Link to="/alleSchadensmeldungen">Alle Schadensmeldungen</Link></li>}
       </ul>
     </nav>
   )

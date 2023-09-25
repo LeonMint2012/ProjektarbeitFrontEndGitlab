@@ -2,7 +2,7 @@ import React from "react";
 import '../../App.css';
 import useAuth from "../../hooks/useAuth";
 import { useState } from "react";
-function NeuerMitarbeiter() {
+const NeuerMitarbeiter = (props) => {
     const {auth} = useAuth();
     const [mitarbeiterData, setMitarbeiterData] = React.useState([])
     const [registerFormData, setRegisterFormData] = useState(
@@ -16,6 +16,16 @@ function NeuerMitarbeiter() {
 
         }
     )
+
+    const [toast, setToast] = useState(null);
+
+    function showToast(nachricht) {
+        setToast(nachricht);
+    
+        setTimeout(() => {
+          setToast(null);
+        }, 3000); // Schließt die Benachrichtigung nach 3 Sekunden
+      };
 
 
     React.useEffect(() => {
@@ -53,7 +63,7 @@ function NeuerMitarbeiter() {
             "firstname": registerFormData.vorname,
             "lastname": registerFormData.nachname,
             "email": registerFormData.vorname + "." + registerFormData.nachname + "@musterAG.de",
-            "password": "",
+            "password": "123",
             "rollen": registerFormData.rollen,
             "gehalt":registerFormData.gehalt
 
@@ -66,57 +76,66 @@ function NeuerMitarbeiter() {
             }),
             body: JSON.stringify(data)
         })
-            
+        .then(response => response.json())
+        .then(data => props.setAlleMitarbeiter(prevItemData => [...prevItemData, data]))
+        showToast("Mitarbeiter erfolgreich erstellt")
     }
     
 
     return (
-        <div className="Mitarbeiter">
-            <form>
-                <fieldset>
-                    <legend>Neuen Mitarbeiter erstellen:</legend>
-                    <label>vorname
-                        <input
-                            type="text"
-                            onChange={handleChange}
-                            name="vorname"
-                            value={registerFormData.vorname}
-                        />
-                    </label>
-                    <label>nachname
-                        <input
-                            type="text"
-                            onChange={handleChange}
-                            name="nachname"
-                            value={registerFormData.nachname}
-                        />
-                    </label>
-                    <label>Gehalt
-                        <input
-                            type="number"
-                            onChange={handleChange}
-                            name="gehalt"
-                            value={registerFormData.gehalt}
-                        />
-                    </label>
-                    <label>Rollen:
-                        <select
-                            name="rollen"
-                            value={registerFormData.rollen}
-                            onChange={handleChangeMultipleSelect}
-                            multiple={true}
-                        >
-                            <option value="USER">Mitabeiter</option>
-                            <option value="HAUSMEISTER">Hausmeister</option>
-                            <option value="HRM">Personalabteilung</option>
-                            <option value="INVENTAR">Lagerist</option>
-                            <option value="ADMIN">Admin</option>
-                        </select>
+        <div>
+            {toast && 
+            <div className="toast">
+                {toast}
+            </div>
+            }
+            <div className="Mitarbeiter">
+                <form>
+                    <fieldset>
+                        <legend>Neuen Mitarbeiter erstellen:</legend>
+                        <label>Vorname
+                            <input
+                                type="text"
+                                onChange={handleChange}
+                                name="vorname"
+                                value={registerFormData.vorname}
+                            />
+                        </label>
+                        <label>Nachname
+                            <input
+                                type="text"
+                                onChange={handleChange}
+                                name="nachname"
+                                value={registerFormData.nachname}
+                            />
+                        </label>
+                        <label>Gehalt
+                            <input
+                                type="number"
+                                onChange={handleChange}
+                                name="gehalt"
+                                value={registerFormData.gehalt}
+                            />
+                        </label>
+                        <label>Rollen:
+                            <select
+                                name="rollen"
+                                value={registerFormData.rollen}
+                                onChange={handleChangeMultipleSelect}
+                                multiple={true}
+                            >
+                                <option value="USER">Mitabeiter</option>
+                                <option value="HAUSMEISTER">Hausmeister</option>
+                                <option value="HRM">Personalabteilung</option>
+                                <option value="INVENTAR">Lagerist</option>
+                                <option value="ADMIN">Admin</option>
+                            </select>
 
-                    </label>
-                    <button onClick={register}>Registrieren</button>
-                </fieldset>
-            </form>
+                        </label>
+                        <button onClick={register}>Registrieren</button>
+                    </fieldset>
+                </form>
+            </div>
         </div>
     )
 }

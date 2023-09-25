@@ -1,5 +1,6 @@
 import React from "react";
 import '../../App.css';
+import { useState } from 'react'
 
 import useAuth from "../../hooks/useAuth";
 const NeuerGegenstand = (props) =>{
@@ -11,6 +12,16 @@ const NeuerGegenstand = (props) =>{
         }
     )
     
+    const [toast, setToast] = useState(null);
+
+    function showToast(nachricht) {
+        setToast(nachricht);
+    
+        setTimeout(() => {
+          setToast(null);
+        }, 3000); // Schließt die Benachrichtigung nach 3 Sekunden
+      };
+
     function handleChange(event) {
         const { name, value, type, checked } = event.target
         setGegenstandFormData(prevFormData => {
@@ -38,6 +49,10 @@ const NeuerGegenstand = (props) =>{
         })
             .then(reponse => reponse.json())
             .then(data => props.setGegenstaende(prevItemData => [...prevItemData, data]))
+        
+        gegenstandFormData.bezeichnung = "";
+        gegenstandFormData.preis = 0;
+        showToast("Gegenstand erfolgreich erstellt");
     }
 
     // function ausleihen(event) {
@@ -64,6 +79,10 @@ const NeuerGegenstand = (props) =>{
     
     return (
         <div>
+            {toast && 
+            <div className="toast">
+                {toast}
+            </div>}
             <p>Gegenstandsverwaltung:</p>
             <form>
                 <fieldset>

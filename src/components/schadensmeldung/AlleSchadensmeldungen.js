@@ -70,9 +70,7 @@ const AlleSchadensmeldungen = () => {
             </ul>
             : <h3>Es gibt keine neuen Schäden</h3>
             }
-            <div>
-                <Link to="/">Home</Link>
-            </div>
+            
         </section>
     )
 }

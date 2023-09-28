@@ -87,7 +87,7 @@ const NeuerGegenstand = (props) =>{
             <form>
                 <fieldset>
                     <legend>Erstellen:</legend>
-                    <label>Name des Gegenstands:
+                    <label>Name des Gegenstands*:
                         <input
                             type="text"
                             placeholder="Bezeichnung"
@@ -106,7 +106,7 @@ const NeuerGegenstand = (props) =>{
                         />
                     </label>
                     <br></br>
-                    <button onClick={addGegenstand} type='button'>Neuen Gegenstand erstellen</button>
+                    <button disabled={gegenstandFormData.bezeichnung === ""} onClick={addGegenstand} type='button'>Neuen Gegenstand erstellen</button>
                 </fieldset>
             </form>
            

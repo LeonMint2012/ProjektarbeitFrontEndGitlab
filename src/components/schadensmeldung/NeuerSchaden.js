@@ -71,7 +71,7 @@ function NeuerSchaden({ onChange, onSubmit }) {
                 <form onSubmit={onSubmit}>
                     <fieldset>
                         <legend>Neuen Schaden hinzufügen:</legend>
-                        <label>Gebäude:
+                        <label>Gebäude*:
                             <input
                                 type="text"
                                 placeholder="Gebäude"
@@ -91,7 +91,7 @@ function NeuerSchaden({ onChange, onSubmit }) {
                             />
                         </label>
                         <br />
-                        <label className="test">Titel:
+                        <label>Titel*:
                             <input
                                 type="text"
                                 placeholder="Titel"
@@ -122,7 +122,7 @@ function NeuerSchaden({ onChange, onSubmit }) {
                             </select>
                         </label>
                         <br />
-                        <button type="submit" onClick={addSchaden}>Schaden hinzufügen</button>
+                        <button type="submit" disabled={schadenFormData.gebaude === "" || schadenFormData.titel === ""} onClick={addSchaden}>Schaden hinzufügen</button>
                     </fieldset>
                 </form>
             </div>

@@ -16,18 +16,18 @@ const AlleSchadensmeldungen = () => {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
+                //console.log(data)
                 setSchaeden(data)
 
             })
     }, [])
 
     const schadenErledigt = (schaden) => {
-        console.log("schadensId: " + schaden);
+        //console.log("schadensId: " + schaden);
         var data = {
             "id": schaden.id
         }
-        console.log(data)
+        //console.log(data)
         fetch("http://localhost:8080/api/schaden/schadenBearbeitet", {
             method: 'POST',
             headers: new Headers({
@@ -39,9 +39,9 @@ const AlleSchadensmeldungen = () => {
         })
             .then(reponse => reponse.json())
             .then(data => {
-                console.log(data);
+                //console.log(data);
                 const neuSchaeden = schaeden.filter((schaden) => schaden.id !== data.id);
-                console.log("neu Schäden" + neuSchaeden)
+                //console.log("neu Schäden" + neuSchaeden)
                 setSchaeden(neuSchaeden);
             })
         }

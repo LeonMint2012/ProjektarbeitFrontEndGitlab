@@ -29,12 +29,12 @@ const FirmeneventsAngemeldet = () => {
           .then(res => res.json())
           .then(data => {
             setMitarbeiterDaten(data)
-            console.log(mitarbeiterDaten)
+            //console.log(mitarbeiterDaten)
           })
       }, [])
 
     const absagen = (firmenevent) => {
-        console.log("UserId teilnehmen: " + auth.userId + "FirmeneventId: " + firmenevent.id);
+        //console.log("UserId teilnehmen: " + auth.userId + "FirmeneventId: " + firmenevent.id);
         var data = {
             "firmeneventId": firmenevent.id,
             "mitarbeiterId": auth.userId
@@ -59,7 +59,7 @@ const FirmeneventsAngemeldet = () => {
         var namen = "";
         //Prüft, ob nur ein Teilnehmer in Namensliste umgewandelt werden soll oder mehrere Teilnehmer. Ein Teilnehmer ist nicht itterierbar, deswegen Unterscheidung.
         if(Array.isArray(ids)){
-          console.log("ist array:" + ids)
+          //console.log("ist array:" + ids)
           for(const id of ids){
             for (const element of mitarbeiterDaten) {
               if (element.id === id) {
@@ -68,7 +68,7 @@ const FirmeneventsAngemeldet = () => {
             }
           }
         } else {
-          console.log("ist nur eins" + ids)
+          //console.log("ist nur eins" + ids)
           for (const element of mitarbeiterDaten) {
             if (element.id === ids) {
               return "" + element.vorname + " " + element.nachname;

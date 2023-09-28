@@ -32,7 +32,7 @@ const Mitarbeiterverwaltung = () => {
       "rollen":mitarbeiter.rollen,
       "gehalt":mitarbeiter.gehalt
     }
-    console.log(JSON.stringify(data) + "neue Mitarbeiter infos")
+    //console.log(JSON.stringify(data) + "neue Mitarbeiter infos")
     fetch("http://localhost:8080/api/mitarbeiter/editiereMitarbeiter", {
       method: 'POST',
       headers: new Headers({
@@ -68,7 +68,7 @@ const Mitarbeiterverwaltung = () => {
   }
 
   const handleDeletMitarbeiter = async (mitarbeiterZumLoeschen) => {
-    console.log(mitarbeiterZumLoeschen);
+    //console.log(mitarbeiterZumLoeschen);
     await fetch(`http://localhost:8080/api/mitarbeiter/loescheMitarbeiter/${mitarbeiterZumLoeschen.id}`, {
       method: "DELETE",
       headers: new Headers({

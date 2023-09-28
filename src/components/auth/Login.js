@@ -40,12 +40,12 @@ function Login(){
                 return response.json()
             })
             .then(data => {
-                console.log(data)          
+                //console.log(data)          
                 const userId = data?.userId
                 const username = data?.username
                 const token = data?.token
                 const rollen = data?.role
-                console.log(userId + " " + username + " " +  token + " " + rollen)
+                //console.log(userId + " " + username + " " +  token + " " + rollen)
                 setAuth({userId, username, token, rollen})
                 navigate(from, {replace: true})
                

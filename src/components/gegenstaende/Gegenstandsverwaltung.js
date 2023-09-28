@@ -21,7 +21,7 @@ const Gegenstandsverwaltung = () => {
       .then(res => res.json())
       .then(data => {
         setGegenstaende(data)
-        console.log(gegenstaende)
+        //console.log(gegenstaende)
       })
   }, [])
 
@@ -34,7 +34,7 @@ const Gegenstandsverwaltung = () => {
       .then(res => res.json())
       .then(data => {
         setMitarbeiterDaten(data)
-        console.log(mitarbeiterDaten)
+        //console.log(mitarbeiterDaten)
       })
   }, [])
   // function handleAddGegenstand(event) {
@@ -42,7 +42,7 @@ const Gegenstandsverwaltung = () => {
   // }
 
   const handleUpdateGegenstand = (gegenstand) => {
-    console.log(gegenstand);
+    //console.log(gegenstand);
 
     var data = {
       "id": gegenstand.id,
@@ -87,7 +87,7 @@ const Gegenstandsverwaltung = () => {
 
 
   const handleDeleteGegenstand = async (gegenstandZumLoeschen) => {
-    console.log(gegenstandZumLoeschen);
+    //console.log(gegenstandZumLoeschen);
     await fetch(`http://localhost:8080/api/gegenstand/loescheGegenstand/${gegenstandZumLoeschen.id}`, {
       method: "DELETE",
       headers: new Headers({
@@ -104,15 +104,15 @@ const Gegenstandsverwaltung = () => {
   }
 
   const handleGegenstandFreigeben = async (gegenstand) => {
-    console.log(gegenstand);
+    //console.log(gegenstand);
 
     var data = {
       "id": gegenstand.id,
-      "mitarbeiterId": null,
+      "mitarbeiterId": gegenstand.mitarbeiterId,
       "bezeichnung": gegenstand.bezeichnung,
       "preis": gegenstand.preis
     }
-    fetch("http://localhost:8080/api/gegenstand/editiereGegenstand", {
+    fetch("http://localhost:8080/api/gegenstand/freigebenGegenstand", {
       method: 'POST',
       headers: new Headers({
         'Accept': 'application/json',

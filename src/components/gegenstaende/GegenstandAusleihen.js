@@ -47,36 +47,69 @@ const GegenstandAusleihen = () => {
 
 
     const ausleihen = async (gegenstandZumAusleihen) => {
-        console.log("MitarbeitID: " + auth.userId)
+        //console.log("MitarbeitID: " + auth.userId)
         var data = {
             "gegenstandId": gegenstandZumAusleihen.id,
             "mitarbeiterId": auth.userId
         }
-        fetch("http://localhost:8080/api/gegenstand/ausleihen", {
-            method: 'POST',
-            headers: new Headers({
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                "Authorization": "Bearer " + auth.token
-            }),
-            body: JSON.stringify(data)
-        })
-            .then(response => {
-                    console.log("response:" + response.stringify);
-                if(response.stringify === undefined){
-                    showToast("Gehalt ist nicht ausreichend")
+        try {
+            const response = await fetch("http://localhost:8080/api/gegenstand/ausleihen", {
+                method: 'POST',
+                headers: new Headers({
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    "Authorization": "Bearer " + auth.token
+                }),
+                body: JSON.stringify(data)
+            });
+    
+            if (response.status === 200) {
+                const responseData = await response.json();
+                
+                if (responseData === null) {
+                    showToast("Gehalt ist nicht ausreichend");
+                } else {
+                    const neueVerfuegbareGegenstaende = verfuegbareGegenstaende.filter(
+                        (gegenstand) => gegenstand.id !== responseData.id
+                    );
+                    setVerfuegbareGegenstaende(neueVerfuegbareGegenstaende);
+                    setAusgeliehendeGegenstaende((prevGegenstaende) => [...prevGegenstaende, responseData]);
                 }
-                 return response.json()
-            })
-            .then(data => {
-                if(data === null){
-                    console.log("Fehler null")
-                }
-                const neueVerfuegbareGegenstaende = verfuegbareGegenstaende.filter(
-                    (gegenstand) => gegenstand.id !== data.id);
-                setVerfuegbareGegenstaende(neueVerfuegbareGegenstaende);
-                setAusgeliehendeGegenstaende(prevGegenstaende => [...prevGegenstaende, data])
-            })
+            } else {
+                showToast("Fehler bei der Anfrage");
+            }
+        } catch (error) {
+            //console.error("Fehler beim Ausleihen:", error);
+            showToast("Nicht ausreichend Gehalt");
+        }
+        // fetch("http://localhost:8080/api/gegenstand/ausleihen", {
+        //     method: 'POST',
+        //     headers: new Headers({
+        //         'Accept': 'application/json',
+        //         'Content-Type': 'application/json',
+        //         "Authorization": "Bearer " + auth.token
+        //     }),
+        //     body: JSON.stringify(data)
+        // })
+        //     .then(response => {
+        //              console.log("das steckt hinter dem response ding: ")
+        //              console.log("check response: " + response !== null);
+        //         if(response === null){
+        //             showToast("Gehalt ist nicht ausreichend")
+        //         }else{
+        //          return response.json()
+        //         }
+        //     })
+        //     .then(data => {
+        //         console.log("das steck hinter data:" + data)
+        //         if(data === null){
+        //             console.log("Fehler null")
+        //         }
+        //         const neueVerfuegbareGegenstaende = verfuegbareGegenstaende.filter(
+        //             (gegenstand) => gegenstand.id !== data.id);
+        //         setVerfuegbareGegenstaende(neueVerfuegbareGegenstaende);
+        //         setAusgeliehendeGegenstaende(prevGegenstaende => [...prevGegenstaende, data])
+        //     })
     }
 
     const zurueckgeben = async (gegenstandZumZurueckgeben) => {
@@ -84,9 +117,9 @@ const GegenstandAusleihen = () => {
             "gegenstandId": gegenstandZumZurueckgeben.id,
             "mitarbeiterId": auth.userId
         }
-        console.log(verfuegbareGegenstaende)
-        console.log(ausgeliehendeGegenstaende)
-        console.log(data);
+        //console.log(verfuegbareGegenstaende)
+        //console.log(ausgeliehendeGegenstaende)
+        //console.log(data);
         fetch("http://localhost:8080/api/gegenstand/zurueckgeben", {
             method: 'POST',
             headers: new Headers({

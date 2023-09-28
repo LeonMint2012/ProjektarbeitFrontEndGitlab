@@ -47,7 +47,7 @@ const NeuerMitarbeiter = (props) => {
                 [name]: value
             }
         })
-        console.log(registerFormData.rollen)
+        //console.log(registerFormData.rollen)
     }
 
     // https://react.dev/reference/react-dom/components/select#enabling-multiple-selection
@@ -93,7 +93,7 @@ const NeuerMitarbeiter = (props) => {
                 <form>
                     <fieldset>
                         <legend>Neuen Mitarbeiter erstellen:</legend>
-                        <label>Vorname
+                        <label>Vorname*:
                             <input
                                 type="text"
                                 onChange={handleChange}
@@ -101,7 +101,7 @@ const NeuerMitarbeiter = (props) => {
                                 value={registerFormData.vorname}
                             />
                         </label>
-                        <label>Nachname
+                        <label>Nachname*:
                             <input
                                 type="text"
                                 onChange={handleChange}
@@ -109,7 +109,7 @@ const NeuerMitarbeiter = (props) => {
                                 value={registerFormData.nachname}
                             />
                         </label>
-                        <label>Gehalt
+                        <label>Gehalt*:
                             <input
                                 type="number"
                                 onChange={handleChange}
@@ -117,7 +117,7 @@ const NeuerMitarbeiter = (props) => {
                                 value={registerFormData.gehalt}
                             />
                         </label>
-                        <label>Rollen:
+                        <label>Rollen*:
                             <select
                                 name="rollen"
                                 value={registerFormData.rollen}
@@ -132,7 +132,8 @@ const NeuerMitarbeiter = (props) => {
                             </select>
 
                         </label>
-                        <button onClick={register}>Registrieren</button>
+                        <button disabled={registerFormData.vorname === "" || registerFormData.nachname === "" || registerFormData.gehalt === 0 || registerFormData.rollen.length === 0}
+                                onClick={register}>Registrieren</button>
                     </fieldset>
                 </form>
             </div>

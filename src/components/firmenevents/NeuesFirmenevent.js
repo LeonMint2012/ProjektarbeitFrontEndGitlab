@@ -60,9 +60,9 @@ const NeuesFirmenevent = (props) => {
         })
             .then(reponse => reponse.json())
             .then(data => {
-                console.log(data)
+                //console.log(data)
                 props.setFirmenevents(prevFirmenevents =>[...prevFirmenevents, data])
-                console.log("versendet")
+                //console.log("versendet")
                 firmeneventNeuFormData.titel="";
                 firmeneventNeuFormData.beschreibung="";
                 firmeneventNeuFormData.ort="";
@@ -78,7 +78,7 @@ const NeuesFirmenevent = (props) => {
             </div>}
             <p>Neues Firmenevent erstellen:</p>
             <form>
-                <label>Titel:
+                <label>Titel*:
                     <input
                         type='text'
                         onChange={handleChange}
@@ -94,7 +94,7 @@ const NeuesFirmenevent = (props) => {
                         value={firmeneventNeuFormData.beschreibung}
                     />
                 </label>
-                <label>Ort:
+                <label>Ort*:
                     <input
                         type='text'
                         onChange={handleChange}
@@ -115,7 +115,7 @@ const NeuesFirmenevent = (props) => {
                         
                     </label>
                 </div>
-                <button disabled={!gueltigeUhrzeit} onClick={neuesFirmeneventErstellen}>Neues Firmenevent erstellen</button>
+                <button disabled={!gueltigeUhrzeit || firmeneventNeuFormData.titel === "" || firmeneventNeuFormData.ort === ""} onClick={neuesFirmeneventErstellen}>Neues Firmenevent erstellen</button>
             </form>
         </div>
     )

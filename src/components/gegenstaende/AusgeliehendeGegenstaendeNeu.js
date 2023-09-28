@@ -6,8 +6,8 @@ const AusgeliehendeGegenstaendeNeu = ({mitDaten, ausgeliehendeGegenstaende, setA
     useEffect(() => {
         
         if(auth.userId){
-        console.log(auth?.userId)
-        console.log(auth.token)
+        //console.log(auth?.userId)
+        //console.log(auth.token)
         fetch(`http://localhost:8080/api/gegenstand/gegenstaendeVon/${auth?.userId}`, {
             
             headers: {
